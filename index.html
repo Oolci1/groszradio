@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moje Radio</title>
+    <title>Losowe Radio</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,17 +12,70 @@
             background-color: #222;
             color: white;
         }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #status {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Moje Radio</h1>
-    <p>Teraz gramy: pukpuk.mp3</p>
+    <h1>Moje Losowe Radio</h1>
+    
+    <!-- Ukryty odtwarzacz, sterujemy nim przez JavaScript -->
+    <audio id="player"></audio>
 
-    <audio controls autoplay>
-        <source src="pukpuk.mp3" type="audio/mpeg">
-        Twoja przeglądarka nie obsługuje odtwarzacza audio.
-    </audio>
+    <button id="playBtn">Włącz Radio</button>
+    <p id="status">Cisza w eterze. Kliknij przycisk!</p>
+
+    <script>
+        // TUTAJ MUSISZ WPISAĆ NAZWY WSZYSTKICH SWOICH PIOSENEK (.mp3)
+        // Pamiętaj o cudzysłowach i przecinkach!
+        const piosenki = [
+            "pukpuk.mp3",
+            "Bangaran.mp3",
+            "dissnaraka.mp3"
+        ];
+
+        const player = document.getElementById('player');
+        const playBtn = document.getElementById('playBtn');
+        const status = document.getElementById('status');
+
+        // Funkcja losująca i odtwarzająca piosenkę
+        function grajLosowo() {
+            // Losowanie liczby od 0 do ilości piosenek
+            const losowyIndex = Math.floor(Math.random() * piosenki.length);
+            const wybranaPiosenka = piosenki[losowyIndex];
+            
+            // Ustawienie źródła odtwarzacza i start
+            player.src = wybranaPiosenka;
+            player.play();
+            
+            // Zmiana tekstu na stronie
+            status.innerText = "Teraz gramy: " + wybranaPiosenka;
+            playBtn.innerText = "Wylosuj inną";
+        }
+
+        // Kiedy klikniesz przycisk - włącz losową piosenkę
+        playBtn.addEventListener('click', grajLosowo);
+
+        // Kiedy aktualna piosenka się skończy - automatycznie włącz kolejną
+        player.addEventListener('ended', grajLosowo);
+    </script>
 
 </body>
 </html>
